@@ -2,27 +2,28 @@ function generateringComponent(vardata, vargeodata){
 
   var lookup = genLookup(vargeodata) ;
 
-  var biomass_chart = dc.lineChart('#sahel-biomasse-bar');
-  var sahelBioMap = dc.leafletChoroplethChart('#sahel-biomasse-map');
+  var biomass_chart = dc.lineChart('#biomassChart');
+  var anomalychoroplethmap = dc.leafletChoroplethChart('#anomalyMap');
 
   var cf = crossfilter(vardata) ;
   var all = cf.groupAll();
 
-  var barDimension = cf.dimension(function(d) { return d.year}) ;
+  var chartDimension = cf.dimension(function(d) { return d.year}) ;
   var mapDimension = cf.dimension(function(d) { return d.rowcacode2});
 
-  var barGroup = barDimension.group().reduceSum(function(d){ return d.biomass/1000});
+  var chartGroup = chartDimension.group().reduceSum(function(d){ return d.biomass});
   var mapGroup = mapDimension.group().reduceSum(function(d){ return d.biomass});
 
   biomass_chart.width(350)
                .height(450)
-               .dimension(barDimension)
-               .group(barGroup)
+               .dimension(chartDimension)
+               .group(chartGroup)
                .x(d3.scale.linear().domain([1998, 2016]))
                .renderArea(false)
+               .margins({top: 20, right: 0, bottom: 30, left: 80})
                .renderHorizontalGridLines(true)
                .renderVerticalGridLines(true)
-               .elasticX(true)
+               .elasticY(true)
                .colors('#03a9f4')
                .colorAccessor(function(d,i){ return 0;});
                //.xAxis().ticks(5);
@@ -32,7 +33,7 @@ dc.dataCount('#count-info')
   .group(all);
 
 
-  sahelBioMap.width(450)
+  anomalychoroplethmap.width(450)
              .height(450)
              .dimension(mapDimension)
              .group(mapGroup)
@@ -58,7 +59,7 @@ dc.dataCount('#count-info')
 
       dc.renderAll();
 
-      var map = sahelBioMap.map();
+      var map = anomalychoroplethmap.map();
 
       zoomToGeom(vargeodata);
 
