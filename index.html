@@ -1,0 +1,52 @@
+<html>
+    <head>
+        <title> Biomass visualization </title>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link rel="stylesheet" ype="text/css" href="css/bootstrap.min.css"/>
+        <link rel="stylesheet" type="text/css" href="css/dc.css"/>
+        <link rel="stylesheet" type="text/css" href="css/leaflet.css"/>
+        <link rel="stylesheet" type="text/css" href="css/site.css"/>
+        <script src="js/jquery-2.1.4.min.js"></script>
+        <script src="js/d3.min.js"></script>
+        <script src="js/crossfilter.v1.min.js"></script>
+        <script src="js/dc.min.js"></script>
+        <script src="js/leaflet.js"></script>
+        <script src="js/bootstrap.js"></script>
+        <script src="js/dc.leaflet.js"></script>
+
+    </head>
+    <body>
+      <div class="container-fluid" id='main-container'>
+        <div class='content'>
+          <div class='container'>
+          	<div class="row">
+              <div class="col-md-12">
+                <h2> Biomass production in Sahel region from 1998 to 2016 </h2>
+              </div>
+            </div>
+            <div id="header" class="row">
+              <!-- <div class="col-md-8">
+                <p> Les valeurs de biomasse sont exprimees en kilogramme par hectare et tiennent compte des chamsp, forets et paturages.</p>
+            </div> -->
+            <div class="col-md-1">
+              <a class="reset btn btn-primary btn-sm" id="reset" href="javascript:dc.filterAll();dc.redrawAll();">Reset All</a>
+            </div>
+            <div class="col-md-3" id="count-info">
+                <!-- <span class="filter-count "></span> selected out of <span class="total-count "></span> records. -->
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6" id="sahel-biomasse-bar"></div>
+            <div class="col-md-6" id="sahel-biomasse-map"></div>
+          </div>
+          <!-- <div class="row" id="footer">
+            <p>
+              La biomasse represente la matiere seche contenue dans un volume donné d'herbe. 
+            </p>
+          </div> -->
+        </div>
+      </div>
+      <script src="js/site.js"></script>
+  </body>
+  </html>
