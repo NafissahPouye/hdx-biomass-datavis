@@ -51,7 +51,7 @@ dc.dataCount('#count-info')
                }
              })
              .featureKeyAccessor(function (feature){
-               return feature.properties['rowcacode2'];
+               return feature.properties['Rowcacode2'];
              }).popup(function (d){
                return lookup[d.key];
              })
@@ -71,7 +71,7 @@ dc.dataCount('#count-info')
       function genLookup(geojson) {
         var lookup = {} ;
         geojson.features.forEach(function (e) {
-          lookup[e.properties['rowcacode2']] = String(e.properties['adm2']);
+          lookup[e.properties['Rowcacode2']] = String(e.properties['NAME']);
         });
         return lookup ;
       }
@@ -90,7 +90,7 @@ var dataCall = $.ajax({
 
 var geomCall = $.ajax({
     type: 'GET',
-    url: 'data/bio-wa.geojson',
+    url: 'data/biomasse.geojson',
     dataType: 'json',
 });
 
