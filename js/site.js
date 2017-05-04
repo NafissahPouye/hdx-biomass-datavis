@@ -58,11 +58,6 @@ dc.dataCount('#count-info')
             })         
              .featureKeyAccessor(function (feature){
                return feature.properties['Rowcacode2'];
-<<<<<<< HEAD
-=======
-             }).popup(function (d){
-               return lookup[d.key];
->>>>>>> 46ef062bdf3a797deebad95b4c4faa62ae9d21f1
              })
             .popup(function (d){
                return d.properties['ADM2_NAME'];//+" : "+d.properties['ANOMALIE'];//feature.properties['ADM2_NAME'];
