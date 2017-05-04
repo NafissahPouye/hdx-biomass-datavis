@@ -12,7 +12,7 @@ function generateringComponent(vardata, vargeodata){
   var mapDimension = cf.dimension(function(d) { return d.rowcacode2});
 
   var chartGroup = chartDimension.group().reduceSum(function(d){ return d.biomass});
-  var mapGroup = mapDimension.group().reduceSum(function(d){ return d.biomass});
+  var mapGroup = mapDimension.group().reduceSum(function(d){ return d.anomalie});
 
   biomass_chart.width(350)
                .height(450)
@@ -33,29 +33,36 @@ dc.dataCount('#count-info')
   .group(all);
 
 
-  anomalychoroplethmap.width(450)
+ anomalychoroplethmap.width(450)
              .height(450)
              .dimension(mapDimension)
              .group(mapGroup)
-             
              .center([0,0])
              .zoom(0)
              .geojson(vargeodata)
-             .colors(['#CCCCCC','#03a9f4'])
-             .colorDomain([0,1])
+             .colors(['#DDDDDD','#A7C1D3','#71A5CA','#3B88C0', '#FF0080'])
+             .colorDomain([0,4])
              .colorAccessor(function (d){
-               if (d>0) {
-                 return 1;
-               } else {
-                 return 0;
-               }
-             })
+               var c =0
+                if(d>100){
+                    c=4;
+                } else if (d>130) {
+                    c=3;
+                } else if (d>3260017.488) {
+                    c=2;
+                } else if (d>1738737.528) {
+                    c=1;
+                };
+                return c
+                
+            })         
              .featureKeyAccessor(function (feature){
-               return feature.properties['rowcacode2'];
-             }).popup(function (d){
-               return lookup[d.key];
+               return feature.properties['Rowcacode2'];
              })
-             .renderPopup(true);
+            .popup(function (d){
+               return d.properties['ADM2_NAME'];//+" : "+d.properties['ANOMALIE'];//feature.properties['ADM2_NAME'];
+              })
+             .renderPopup(false);
 
       dc.renderAll();
 
@@ -71,7 +78,7 @@ dc.dataCount('#count-info')
       function genLookup(geojson) {
         var lookup = {} ;
         geojson.features.forEach(function (e) {
-          lookup[e.properties['rowcacode2']] = String(e.properties['adm2']);
+          lookup[e.properties['Rowcacode2']] = String(e.properties['NAME']);
         });
         return lookup ;
       }
@@ -82,15 +89,10 @@ var dataCall = $.ajax({
     url: 'data/biomass.json',
     dataType: 'json',
 });
-// var dataCall = $.ajax({
-//     type: 'GET',
-//     url: 'data/biomasse.csv',
-//     dataType: 'csv',
-// });
 
 var geomCall = $.ajax({
     type: 'GET',
-    url: 'data/bio-wa.geojson',
+    url: 'data/biomasse.geojson',
     dataType: 'json',
 });
 
