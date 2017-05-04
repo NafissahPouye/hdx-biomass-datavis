@@ -14,13 +14,13 @@ function generateringComponent(vardata, vargeodata){
   var chartGroup = chartDimension.group().reduceSum(function(d){ return d.biomass});
   var mapGroup = mapDimension.group().reduceSum(function(d){ return d.anomalie});
 
-  biomass_chart.width(350)
+  biomass_chart.width(475)
                .height(450)
                .dimension(chartDimension)
                .group(chartGroup)
                .x(d3.scale.linear().domain([1998, 2016]))
-               .renderArea(false)
-               .margins({top: 20, right: 0, bottom: 30, left: 80})
+               .renderArea(true)
+               .margins({top: 20, right: 0, bottom: 30, left: 90})
                .renderHorizontalGridLines(true)
                .renderVerticalGridLines(true)
                .elasticY(true)
@@ -40,18 +40,22 @@ dc.dataCount('#count-info')
              .center([0,0])
              .zoom(0)
              .geojson(vargeodata)
-             .colors(['#DDDDDD','#A7C1D3','#71A5CA','#3B88C0', '#FF0080'])
-             .colorDomain([0,4])
+             .colors(['#0080FF','#FE9A2E','#FACC2E','#71A5CA', '#0B6121','#0B3B0B'])
+             .colorDomain([0,6])
              .colorAccessor(function (d){
                var c =0
-                if(d>100){
-                    c=4;
-                } else if (d>130) {
-                    c=3;
-                } else if (d>3260017.488) {
+                if(d<75){
+                    c=  1;
+                } else if (d>=75 & d<90) {
                     c=2;
-                } else if (d>1738737.528) {
-                    c=1;
+                } else if (d>=90 & d<110) {
+                    c=3;
+                } else if (d>=110 & d<150) {
+                    c=4;
+                } else if (d>=150 & d<175) {
+                    c=5;
+                } else if (d>175) {
+                    c=6;
                 };
                 return c
                 
