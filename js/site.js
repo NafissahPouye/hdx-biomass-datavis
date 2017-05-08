@@ -32,29 +32,31 @@ function generateringComponent(vardata, vargeodata){
                       .attr('transform', "rotate(-60)");
                 })
                .xAxis().tickFormat(d3.format("d"));
-               //.yAxis().tickFormat(d3.format("d"));
+  biomass_chart.yAxis().tickFormat(function (v) {
+            return v + 'k';});
 
 
 dc.dataCount('#count-info')
   .dimension(cf)
   .group(all);
 
-
+//begin test
+/**/
+//end test
  anomalychoroplethmap.width($('#anomalyMap'))
              .height(500)
              .dimension(mapDimension)
              .group(mapGroup)
-             .center([0,0])
-             .zoom(0)
+             .center([27.85,85.1])
+             .zoom(8)
              .geojson(vargeodata)
              .colors(['#CEF6CE','#F5DA81', '#58FAAC', '#01DF3A'])
-             //.colors(['#334605','#DDDDDD','#C59512','#EFB412','#B2F013' ,'#DDDDDD'])
              .colorDomain([0,3])
              .colorAccessor(function (d){
                var c =0
                 if(d<110){
                     c=  1;
-                } else if (d>=110& d<150) {
+                } else if (d>=110 & d<150) {
                     c=2;
                 } else if (d>=150) {
                     c=3;
@@ -68,7 +70,7 @@ dc.dataCount('#count-info')
             .popup(function (d){
                return d.properties['ADM2_NAME'];//+" : "+d.properties['ANOMALIE'];//feature.properties['ADM2_NAME'];
               })
-             .renderPopup(false);
+             .renderPopup(true);
 
       dc.renderAll();
 
