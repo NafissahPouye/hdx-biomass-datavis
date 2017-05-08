@@ -16,6 +16,16 @@
     height:450px;
 }
 
+#descriptif{
+  margin-left: 20px;
+  text-align: justify;
+  
+}
+#reset{
+  margin-top:20px;
+
+}
+
 #header{
     padding-bottom:20px;
     border-bottom-color: #dddddd;
