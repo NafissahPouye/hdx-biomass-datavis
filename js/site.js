@@ -2,7 +2,7 @@ function generateringComponent(vardata, vargeodata){
 
   var lookup = genLookup(vargeodata) ;
 
-  var biomass_chart = dc.lineChart('#biomassChart');
+  var biomass_chart = dc.compositeChart('#biomassChart');
   var anomalychoroplethmap = dc.leafletChoroplethChart('#anomalyMap');
 
   var cf = crossfilter(vardata) ;
@@ -13,20 +13,28 @@ function generateringComponent(vardata, vargeodata){
 
   var chartGroup = chartDimension.group().reduceSum(function(d){ return d.biomass/1000});
   var mapGroup = mapDimension.group().reduceSum(function(d){ return d.anomalie});
+  var colors = ['#FAE61E','#FAE61E'];
 
   biomass_chart.width(550)
                .height(500)
                .dimension(chartDimension)
-               .group(chartGroup)
                .x(d3.scale.linear().domain([1998, 2016]))
-               .renderArea(true)
+               .shareTitle(false)
+               .compose([
+                  dc.lineChart(biomass_chart).group(chartGroup).colors(colors[1]).title(function (d) {
+                   return ["Année      : " + d.key , "Biomasse : " + d.value + " k"].join('\n');
+                  
+                 })
+                ])
+               //.renderArea(true)
                .margins({top: 10, right: 13, bottom: 80, left: 80})
+               .brushOn(false)
                .renderHorizontalGridLines(true)
                .renderVerticalGridLines(true)
                .elasticY(true)
                .colors('#03a9f4')
-               .colorAccessor(function(d,i){ return 0;})
-              .renderlet(function (chart) {
+               //.colorAccessor(function(d,i){ return 0;})
+               .renderlet(function (chart) {
                     chart.selectAll("g.x text")
                       .attr('dx', '-12')
                       .attr('transform', "rotate(-60)");
@@ -34,6 +42,7 @@ function generateringComponent(vardata, vargeodata){
                .xAxis().tickFormat(d3.format("d"));
   biomass_chart.yAxis().tickFormat(function (v) {
             return v + 'k';});
+  
 
 
 dc.dataCount('#count-info')
