@@ -11,14 +11,14 @@ function generateringComponent(vardata, vargeodata){
   var chartDimension = cf.dimension(function(d) { return d.year}) ;
   var mapDimension = cf.dimension(function(d) { return d.rowcacode2});
 
-  var chartGroup = chartDimension.group().reduceSum(function(d){ return d.biomass/1000});
+  var chartGroup = chartDimension.group().reduceSum(function(d){ return d.biomass});
   var mapGroup = mapDimension.group().reduceSum(function(d){ return d.anomalie});
   var colors = ['#A7C1D3','#FAE61E'];
 
   biomass_chart.width(567)
                .height(500)
                .dimension(chartDimension)
-               .x(d3.scale.linear().domain([1997, 2017]))
+               .x(d3.scale.linear().domain([1998, 2016]))
                .shareTitle(false)
                .compose([
                   dc.lineChart(biomass_chart).group(chartGroup).colors(colors[0]).renderArea(true).title(function (d) {
@@ -27,7 +27,7 @@ function generateringComponent(vardata, vargeodata){
                  }),
                 ])
               
-               .margins({top: 10, right: 30, bottom: 80, left: 32})
+               .margins({top: 10, right: 30, bottom: 80, left: 33})
                .brushOn(false)
                // .renderArea(true)
                //.renderHorizontalGridLines(true)
