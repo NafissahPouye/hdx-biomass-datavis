@@ -7,21 +7,32 @@ function generateringComponent(vardata, vargeodata){
 
   var cf = crossfilter(vardata) ;
   var all = cf.groupAll();
-
   var chartDimension = cf.dimension(function(d) { return d.year}) ;
   var mapDimension = cf.dimension(function(d) { return d.rowcacode2});
-
-  var chartGroup = chartDimension.group().reduceSum(function(d){ return d.biomass});
-  var meanGroup = chartDimension.group().reduceSum(function(d){return d.mean});
+  var chartGroup = chartDimension.group().reduceSum(function(d){ return d.biomass/1000});
+  var meanGroup = chartDimension.group().reduceSum(function(d){return d.mean/1000});
   var mapGroup = mapDimension.group().reduceSum(function(d){ return d.anomalie});
   var colors = ['#A7C1D3',' #008080'];
   var numberFormat = d3.format('.2f');
+
+  //begin test
+ /* ctx.font = font;
+        var longest = 0;
+        each(arrayOfStrings,function(string){
+        var textWidth = ctx.measureText(string).width;
+        var textWidth = ctx.measureText(string).width * 1.05;
+          longest = (textWidth > longest) ? textWidth : longest;
+        });
+        return longest;*/
+
+
+  //end test
  
   biomass_chart.width(567)
                .height(520)
                .dimension(chartDimension)
-               .x(d3.scale.linear().domain([1998, 2016]))
-               .legend(dc.legend().x($('#biomassChart').width()-90).y(0).gap(3))
+               .x(d3.scale.linear().domain([1997, 2016]))
+               .legend(dc.legend().x($('#biomassChart').width()-80).y(0).gap(3))
                .shareTitle(false)
                .valueAccessor(function(p) {
                 return p.value;
@@ -36,8 +47,8 @@ function generateringComponent(vardata, vargeodata){
                .label(function (p) { return p.key; })
                .title(function (d) {
                    return ["Année      : " + d.key , "Biomasse : " + d.value + " k" ].join('\n'); })
-               .margins({top: 10, right: 15, bottom: 80, left: 20})
-               .yAxisPadding(100)
+               .margins({top: 10, right: 30, bottom: 80, left: 30})
+               //.yLabelWidth(100)
                .brushOn(false)
                .renderTitle(true)
                biomass_chart.title(function (p) {
@@ -85,10 +96,10 @@ dc.dataCount('#count-info')
              .center([27.85,85.1])
              .zoom(8)
              .geojson(vargeodata)
-             .colors(['#CEF6CE','#F5DA81', '#58FAAC', '#01DF3A'])
+             .colors(['#fff7bc','#ffeda0','#f7fcb9','#addd8e','#31a354'])
              .colorDomain([0,3])
              .colorAccessor(function (d){
-               var c =0
+               var c = 0
                 if(d<110){
                     c=  1;
                 } else if (d>=110 & d<150) {

@@ -8,9 +8,11 @@
 }
 
 .x-axis-label{
-    font-size:0.8ex;
+    font-size:1.3px;
 }
-
+.y-axis-label{
+   font-size:1.3px;
+}
 
 #anomalyMap{
     height:450px;
@@ -47,7 +49,7 @@
 }
 
  .hdx-3w-chart {
-    width:100%;
+    width:10%;
  }
 
  .hdx-3w-info{
