@@ -13,6 +13,9 @@
 .y-axis-label{
    font-size:1.3px;
 }
+.em{
+  font-size: 0.3px
+}
 
 #anomalyMap{
     height:450px;

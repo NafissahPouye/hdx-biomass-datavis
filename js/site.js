@@ -38,10 +38,10 @@ function generateringComponent(vardata, vargeodata){
                 return p.value;
             })
                .compose([
-                 dc.lineChart(biomass_chart).group(meanGroup, "Moyenne").colors(colors[1])/*.title(function (p) {
-                   return ["Année      : " + p.key , "Moyenne : " + numberFormat(p.value) + " k" ].join('\n'); })*/.renderArea(true),
-                  dc.lineChart(biomass_chart).group(chartGroup, "Production").colors(colors[0])/*.title(function (p) {
-                   return ["Année         : " + p.key , "Production : " + numberFormat(p.value) + " k" ].join('\n'); })*/.renderArea(true),
+                 dc.lineChart(biomass_chart).group(meanGroup, "Moyenne").colors(colors[1]).title(function (p) {
+                   return ["Année      : " + p.key , "Moyenne : " + numberFormat(p.value) + " k" ].join('\n'); }).renderArea(true),
+                  dc.lineChart(biomass_chart).group(chartGroup, "Production").colors(colors[0]).title(function (p) {
+                   return ["Année         : " + p.key , "Production : " + numberFormat(p.value) + " k" ].join('\n'); }).renderArea(true),
                  
                 ])
                .label(function (p) { return p.key; })
@@ -51,15 +51,15 @@ function generateringComponent(vardata, vargeodata){
                //.yLabelWidth(100)
                .brushOn(false)
                .renderTitle(true)
-               biomass_chart.title(function (p) {
+              /* biomass_chart.title(function (p) {
                         return [
                   p.key,
                 'Moyenne: ' + numberFormat(p.value.mean) + 'k',
                 'Production: ' + numberFormat(p.value.biomass) + 'k',
                // 'Fluctuation / Index Ratio: ' + numberFormat(p.value.fluctuationPercentage) + '%'
                console.log(p.key)
-            ].join('\n');
-        })
+            ].join('\n');*/
+        
 
                //.xAxisLabel("Année")
                //.yAxisLabel("Production de biomasse en kg")
@@ -67,7 +67,7 @@ function generateringComponent(vardata, vargeodata){
                //.renderHorizontalGridLines(true)
               // .renderVerticalGridLines(true)
                .elasticX(true)
-               .elasticY(true)
+               //.elasticY(true)
                .colorAccessor(function(d,i){ return 0;})
                .renderlet(function (chart) {
                     chart.selectAll("g.x text")
@@ -95,6 +95,8 @@ dc.dataCount('#count-info')
              .group(mapGroup)
              .center([27.85,85.1])
              .zoom(8)
+             .label(function (p) { return p.key; })
+             .renderTitle(true)
              .geojson(vargeodata)
              .colors(['#fff7bc','#ffeda0','#f7fcb9','#addd8e','#31a354'])
              .colorDomain([0,3])
