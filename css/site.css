@@ -1,6 +1,6 @@
 .dc-chart g.row text {
     fill: black;
-    font-size:0.8em;
+    font-size:0.8ex;
 }
 
 .dc-chart .pie-slice {
@@ -8,7 +8,7 @@
 }
 
 .x-axis-label{
-    font-size:0.8em;
+    font-size:0.8ex;
 }
 
 

@@ -11,31 +11,45 @@ function generateringComponent(vardata, vargeodata){
   var chartDimension = cf.dimension(function(d) { return d.year}) ;
   var mapDimension = cf.dimension(function(d) { return d.rowcacode2});
 
-  var chartGroup = chartDimension.group().reduceSum(function(d){ return numberFormat(d.biomass)});
-  var meanGroup = chartDimension.group().reduceSum(function(d){return numberFormat(d.mean)});
+  var chartGroup = chartDimension.group().reduceSum(function(d){ return d.biomass});
+  var meanGroup = chartDimension.group().reduceSum(function(d){return d.mean});
   var mapGroup = mapDimension.group().reduceSum(function(d){ return d.anomalie});
   var colors = ['#A7C1D3',' #008080'];
   var numberFormat = d3.format('.2f');
-
+ 
   biomass_chart.width(567)
                .height(520)
                .dimension(chartDimension)
                .x(d3.scale.linear().domain([1998, 2016]))
+               .legend(dc.legend().x($('#biomassChart').width()-90).y(0).gap(3))
                .shareTitle(false)
                .valueAccessor(function(p) {
                 return p.value;
             })
                .compose([
-                  dc.lineChart(biomass_chart).group(chartGroup).colors(colors[0]).renderArea(true).title(function (p) {
-                   return ["Année         : " + p.key , "Production : " + numberFormat(p.value) + " k" ].join('\n'); }),
-                  dc.lineChart(biomass_chart).group(meanGroup).colors(colors[1]).renderArea(true).title(function (p) {
-                   return ["Année      : " + p.key , "Moyenne : " + numberFormat(p.value) + " k" ].join('\n'); }),
+                 dc.lineChart(biomass_chart).group(meanGroup, "Moyenne").colors(colors[1])/*.title(function (p) {
+                   return ["Année      : " + p.key , "Moyenne : " + numberFormat(p.value) + " k" ].join('\n'); })*/.renderArea(true),
+                  dc.lineChart(biomass_chart).group(chartGroup, "Production").colors(colors[0])/*.title(function (p) {
+                   return ["Année         : " + p.key , "Production : " + numberFormat(p.value) + " k" ].join('\n'); })*/.renderArea(true),
+                 
                 ])
                .label(function (p) { return p.key; })
                .title(function (d) {
                    return ["Année      : " + d.key , "Biomasse : " + d.value + " k" ].join('\n'); })
                .margins({top: 10, right: 15, bottom: 80, left: 20})
+               .yAxisPadding(100)
                .brushOn(false)
+               .renderTitle(true)
+               biomass_chart.title(function (p) {
+                        return [
+                  p.key,
+                'Moyenne: ' + numberFormat(p.value.mean) + 'k',
+                'Production: ' + numberFormat(p.value.biomass) + 'k',
+               // 'Fluctuation / Index Ratio: ' + numberFormat(p.value.fluctuationPercentage) + '%'
+               console.log(p.key)
+            ].join('\n');
+        })
+
                //.xAxisLabel("Année")
                //.yAxisLabel("Production de biomasse en kg")
                // .renderArea(true)
@@ -52,6 +66,7 @@ function generateringComponent(vardata, vargeodata){
                .xAxis().tickFormat(d3.format("d"));
   biomass_chart.yAxis().tickFormat(function (v) {
             return v + 'k';});
+
 
   
 
