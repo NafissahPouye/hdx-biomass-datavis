@@ -67,7 +67,7 @@ function generateringComponent(vardata, vargeodata){
                //.renderHorizontalGridLines(true)
               // .renderVerticalGridLines(true)
                .elasticX(true)
-               //.elasticY(true)
+               .elasticY(true)
                .colorAccessor(function(d,i){ return 0;})
                .renderlet(function (chart) {
                     chart.selectAll("g.x text")
