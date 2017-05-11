@@ -11,27 +11,37 @@ function generateringComponent(vardata, vargeodata){
   var chartDimension = cf.dimension(function(d) { return d.year}) ;
   var mapDimension = cf.dimension(function(d) { return d.rowcacode2});
 
-  var chartGroup = chartDimension.group().reduceSum(function(d){ return d.biomass});
+  var chartGroup = chartDimension.group().reduceSum(function(d){ return numberFormat(d.biomass)});
+  var meanGroup = chartDimension.group().reduceSum(function(d){return numberFormat(d.mean)});
   var mapGroup = mapDimension.group().reduceSum(function(d){ return d.anomalie});
-  var colors = ['#A7C1D3','#FAE61E'];
+  var colors = ['#A7C1D3',' #008080'];
+  var numberFormat = d3.format('.2f');
 
   biomass_chart.width(567)
-               .height(500)
+               .height(520)
                .dimension(chartDimension)
                .x(d3.scale.linear().domain([1998, 2016]))
                .shareTitle(false)
+               .valueAccessor(function(p) {
+                return p.value;
+            })
                .compose([
-                  dc.lineChart(biomass_chart).group(chartGroup).colors(colors[0]).renderArea(true).title(function (d) {
-                   return ["Année      : " + d.key , "Biomasse : " + d.value + " k"].join('\n');
-                  
-                 }),
+                  dc.lineChart(biomass_chart).group(chartGroup).colors(colors[0]).renderArea(true).title(function (p) {
+                   return ["Année         : " + p.key , "Production : " + numberFormat(p.value) + " k" ].join('\n'); }),
+                  dc.lineChart(biomass_chart).group(meanGroup).colors(colors[1]).renderArea(true).title(function (p) {
+                   return ["Année      : " + p.key , "Moyenne : " + numberFormat(p.value) + " k" ].join('\n'); }),
                 ])
-              
-               .margins({top: 10, right: 30, bottom: 80, left: 33})
+               .label(function (p) { return p.key; })
+               .title(function (d) {
+                   return ["Année      : " + d.key , "Biomasse : " + d.value + " k" ].join('\n'); })
+               .margins({top: 10, right: 15, bottom: 80, left: 20})
                .brushOn(false)
+               //.xAxisLabel("Année")
+               //.yAxisLabel("Production de biomasse en kg")
                // .renderArea(true)
                //.renderHorizontalGridLines(true)
               // .renderVerticalGridLines(true)
+               .elasticX(true)
                .elasticY(true)
                .colorAccessor(function(d,i){ return 0;})
                .renderlet(function (chart) {
