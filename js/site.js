@@ -15,10 +15,10 @@ function generateringComponent(vardata, vargeodata){
   var colors = ['#A7C1D3',' #008080'];
   var numberFormat = d3.format('.2f');
 
-  biomass_chart.width(567)
+  biomass_chart.width(560)
                .height(535)
                .dimension(chartDimension)
-               .x(d3.scale.linear().domain([1996, 2016]))
+               .x(d3.scale.linear().domain([1996, 2017]))
                .legend(dc.legend().x($('#biomassChart').width()-80).y(0).gap(3))
                .shareTitle(false)
                .valueAccessor(function(p) {
@@ -34,7 +34,7 @@ function generateringComponent(vardata, vargeodata){
                .label(function (p) { return p.key; })
                .title(function (d) {
                    return ["Année      : " + d.key , "Biomasse : " + d.value + " k" ].join('\n'); })
-               .margins({top: 10, right: 30, bottom: 80, left: 33})
+               .margins({top: 10, right: 13, bottom: 80, left: 30})
                .brushOn(false)
                .renderTitle(true)
                //.labelOffsetY(25)
