@@ -37,7 +37,7 @@ function generateringComponent(vardata, vargeodata){
                .margins({top: 10, right: 13, bottom: 80, left: 30})
                .brushOn(false)
                .renderTitle(true)
-               //.labelOffsetY(25)
+               .append
                .elasticX(true)
                .elasticY(true)
                .colorAccessor(function(d,i){ return 0;})
@@ -49,9 +49,6 @@ function generateringComponent(vardata, vargeodata){
                .xAxis().tickFormat(d3.format("d"));
   biomass_chart.yAxis().tickFormat(function (v) {
             return v + 'k';});
-
-
-  
 
 
 dc.dataCount('#count-info')
@@ -87,7 +84,7 @@ dc.dataCount('#count-info')
                return feature.properties['Rowcacode2'];
              })
             .popup(function (d){
-               return d.properties['ADM2_NAME'];//+" : "+d.properties['ANOMALIE'];//feature.properties['ADM2_NAME'];
+               return d.properties['ADM2_NAME'];
               })
              .renderPopup(true)
              .featureOptions({
