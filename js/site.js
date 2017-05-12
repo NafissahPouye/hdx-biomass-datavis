@@ -26,9 +26,9 @@ function generateringComponent(vardata, vargeodata){
             })
                .compose([
                  dc.lineChart(biomass_chart).group(meanGroup, "Moyenne").colors(colors[1]).title(function (p) {
-                   return ["Année      : " + p.key , "Moyenne : " + numberFormat(p.value) + " k" ].join('\n'); }).renderArea(true),
+                   return ["Année      : " + p.key , "Moyenne : " + numberFormat(p.value) + " k" ].join('\n'); }).renderArea(true).renderDataPoints({radius: 2, fillOpacity: 0.8, strokeOpacity: 0.8}),
                   dc.lineChart(biomass_chart).group(chartGroup, "Production").colors(colors[0]).title(function (p) {
-                   return ["Année         : " + p.key , "Production : " + numberFormat(p.value) + " k" ].join('\n'); }).renderArea(true),
+                   return ["Année         : " + p.key , "Production : " + numberFormat(p.value) + " k" ].join('\n'); }).renderArea(true).renderDataPoints({radius: 2, fillOpacity: 0.8, strokeOpacity: 0.8}),
                  
                 ])
                .label(function (p) { return p.key; })
@@ -37,7 +37,6 @@ function generateringComponent(vardata, vargeodata){
                .margins({top: 10, right: 13, bottom: 80, left: 30})
                .brushOn(false)
                .renderTitle(true)
-               .append
                .elasticX(true)
                .elasticY(true)
                .colorAccessor(function(d,i){ return 0;})
@@ -46,6 +45,7 @@ function generateringComponent(vardata, vargeodata){
                       .attr('dx', '-12')
                       .attr('transform', "rotate(-60)");
                 })
+
                .xAxis().tickFormat(d3.format("d"));
   biomass_chart.yAxis().tickFormat(function (v) {
             return v + 'k';});
