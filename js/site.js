@@ -15,23 +15,10 @@ function generateringComponent(vardata, vargeodata){
   var colors = ['#A7C1D3',' #008080'];
   var numberFormat = d3.format('.2f');
 
-  //begin test
- /* ctx.font = font;
-        var longest = 0;
-        each(arrayOfStrings,function(string){
-        var textWidth = ctx.measureText(string).width;
-        var textWidth = ctx.measureText(string).width * 1.05;
-          longest = (textWidth > longest) ? textWidth : longest;
-        });
-        return longest;*/
-
-
-  //end test
- 
   biomass_chart.width(567)
-               .height(520)
+               .height(535)
                .dimension(chartDimension)
-               .x(d3.scale.linear().domain([1997, 2016]))
+               .x(d3.scale.linear().domain([1996, 2016]))
                .legend(dc.legend().x($('#biomassChart').width()-80).y(0).gap(3))
                .shareTitle(false)
                .valueAccessor(function(p) {
@@ -47,25 +34,10 @@ function generateringComponent(vardata, vargeodata){
                .label(function (p) { return p.key; })
                .title(function (d) {
                    return ["Année      : " + d.key , "Biomasse : " + d.value + " k" ].join('\n'); })
-               .margins({top: 10, right: 30, bottom: 80, left: 30})
-               //.yLabelWidth(100)
+               .margins({top: 10, right: 30, bottom: 80, left: 33})
                .brushOn(false)
                .renderTitle(true)
-              /* biomass_chart.title(function (p) {
-                        return [
-                  p.key,
-                'Moyenne: ' + numberFormat(p.value.mean) + 'k',
-                'Production: ' + numberFormat(p.value.biomass) + 'k',
-               // 'Fluctuation / Index Ratio: ' + numberFormat(p.value.fluctuationPercentage) + '%'
-               console.log(p.key)
-            ].join('\n');*/
-        
-
-               //.xAxisLabel("Année")
-               //.yAxisLabel("Production de biomasse en kg")
-               // .renderArea(true)
-               //.renderHorizontalGridLines(true)
-              // .renderVerticalGridLines(true)
+               //.labelOffsetY(25)
                .elasticX(true)
                .elasticY(true)
                .colorAccessor(function(d,i){ return 0;})
@@ -86,10 +58,8 @@ dc.dataCount('#count-info')
   .dimension(cf)
   .group(all);
 
-//begin test
-/**/
-//end test
- anomalychoroplethmap.width($('#anomalyMap'))
+
+ anomalychoroplethmap.width(567)
              .height(500)
              .dimension(mapDimension)
              .group(mapGroup)
@@ -98,19 +68,20 @@ dc.dataCount('#count-info')
              .label(function (p) { return p.key; })
              .renderTitle(true)
              .geojson(vargeodata)
-             .colors(['#fff7bc','#ffeda0','#f7fcb9','#addd8e','#31a354'])
-             .colorDomain([0,3])
+             .colors(['#DDDDDD','#ffeda0','#f7fcb9','#addd8e','#31a354'])
+             .colorDomain([0,4])
              .colorAccessor(function (d){
                var c = 0
-                if(d<110){
-                    c=  1;
-                } else if (d>=110 & d<150) {
-                    c=2;
-                } else if (d>=150) {
-                    c=3;
-                } 
+                if(d>151){
+                    c=  4;
+                } else if (d>110) {
+                    c = 3;
+                } else  if (d>90){
+                    c = 2;
+                 } else if (d>0) {
+                    c=1;}
                 return c
-                
+             
             })         
              .featureKeyAccessor(function (feature){
                return feature.properties['Rowcacode2'];
@@ -118,7 +89,15 @@ dc.dataCount('#count-info')
             .popup(function (d){
                return d.properties['ADM2_NAME'];//+" : "+d.properties['ANOMALIE'];//feature.properties['ADM2_NAME'];
               })
-             .renderPopup(true);
+             .renderPopup(true)
+             .featureOptions({
+                'fillColor': 'gray',
+                'color': 'gray',
+                'opacity':0.8,
+                'fillOpacity': 0.1,
+                'weight': 1
+            });
+
 
       dc.renderAll();
 

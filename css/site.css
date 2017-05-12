@@ -14,7 +14,7 @@
    font-size:1.3px;
 }
 .em{
-  font-size: 0.3px
+  font-size: 0.1px
 }
 
 #anomalyMap{
@@ -24,6 +24,7 @@
 #descriptif{
   margin-left: 20px;
   text-align: justify;
+  margin-bottom : 1.5px ;
   
 }
 #reset{
