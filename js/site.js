@@ -14,6 +14,9 @@ function generateringComponent(vardata, vargeodata){
   var mapGroup = mapDimension.group().reduceSum(function(d){ return d.anomalie});
   var colors = ['#A7C1D3',' #008080'];
   var numberFormat = d3.format('.2f');
+  var numberFormat2 = d3.format('.1f')
+  var dataMax = 11957.59;
+  var axis = d3.svg.axis().ticks(dataMax).tickFormat(d3.format(".0f"))
 
   biomass_chart.width(560)
                .height(535)
@@ -26,9 +29,9 @@ function generateringComponent(vardata, vargeodata){
             })
                .compose([
                  dc.lineChart(biomass_chart).group(meanGroup, "Moyenne").colors(colors[1]).title(function (p) {
-                   return ["Année      : " + p.key , "Moyenne : " + numberFormat(p.value) + " k" ].join('\n'); }).renderArea(true),/*.renderDataPoints({radius: 2, fillOpacity: 0.8, strokeOpacity: 0.8}),*/
+                   return ["Année      : " + p.key , "Moyenne : " + numberFormat(p.value) ].join('\n'); }).renderArea(true),/*.renderDataPoints({radius: 2, fillOpacity: 0.8, strokeOpacity: 0.8}),*/
                   dc.lineChart(biomass_chart).group(chartGroup, "Production").colors(colors[0]).title(function (p) {
-                   return ["Année         : " + p.key , "Production : " + numberFormat(p.value) + " k" ].join('\n'); }).renderArea(true).renderDataPoints({radius: 2, fillOpacity: 0.8, stroke: 0.8}),
+                   return ["Année         : " + p.key , "Production : " + numberFormat(p.value)].join('\n'); }).renderArea(true).renderDataPoints({radius: 2, fillOpacity: 0.8, stroke: 0.8}),
                  
                 ])
                .label(function (p) { return p.key; })
@@ -46,10 +49,11 @@ function generateringComponent(vardata, vargeodata){
                       .attr('transform', "rotate(-60)");
                 })
 
+               //.yAxis.orient(right)
+
                .xAxis().tickFormat(d3.format("d"));
   biomass_chart.yAxis().tickFormat(function (v) {
-            return v + 'k';});
-
+            return v ;}).ticks(6);
 
 dc.dataCount('#count-info')
   .dimension(cf)
