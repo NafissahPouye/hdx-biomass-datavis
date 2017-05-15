@@ -29,9 +29,9 @@ function generateringComponent(vardata, vargeodata){
             })
                .compose([
                  dc.lineChart(biomass_chart).group(meanGroup, "Moyenne").colors(colors[1]).title(function (p) {
-                   return ["Année      : " + p.key , "Moyenne : " + numberFormat(p.value) ].join('\n'); }).renderArea(true),/*.renderDataPoints({radius: 2, fillOpacity: 0.8, strokeOpacity: 0.8}),*/
+                   return ["Année      : " + p.key , "Moyenne : " + numberFormat(p.value) + "k" ].join('\n'); }).renderArea(true),/*.renderDataPoints({radius: 2, fillOpacity: 0.8, strokeOpacity: 0.8}),*/
                   dc.lineChart(biomass_chart).group(chartGroup, "Production").colors(colors[0]).title(function (p) {
-                   return ["Année         : " + p.key , "Production : " + numberFormat(p.value)].join('\n'); }).renderArea(true).renderDataPoints({radius: 2, fillOpacity: 0.8, stroke: 0.8}),
+                   return ["Année         : " + p.key , "Production : " + numberFormat(p.value) + "k"].join('\n'); }).renderArea(true).renderDataPoints({radius: 2, fillOpacity: 0.8, stroke: 0.8}),
                  
                 ])
                .label(function (p) { return p.key; })
