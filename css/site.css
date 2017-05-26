@@ -25,6 +25,7 @@
   margin-left: 20px;
   text-align: justify;
   margin-bottom : 1.5px ;
+  font-size: 13px;
   
 }
 #reset{
@@ -33,11 +34,11 @@
 }
 
 #header{
-    padding-bottom:20px;
+    /*padding-bottom:10px;*/
     border-bottom-color: #dddddd;
     border-bottom-style: solid;
     border-bottom-width: 1px;
-    margin-bottom:20px;
+    margin-bottom:5px;
 }
 
 #footer{
