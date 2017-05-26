@@ -98,6 +98,27 @@ dc.dataCount('#count-info')
                 'fillOpacity': 0.1,
                 'weight': 1
             });
+    //begin test
+     var legend = L.control({position: 'topright'});
+
+    legend.onAdd = function (map) {
+
+        var div = L.DomUtil.create('div', 'info legend'),
+            labels = ['75 - 90','90 - 110','110 - 150 ','150+'];
+            colors =['#31a354','#addd8e','#f7fcb9','#ffeda0'];
+
+        div.innerHTML = '<br />Légende<br />';
+        for (var i = 0; i < labels.length; i++) {
+            div.innerHTML +=
+                '<i style="background:' + colors[i] + '"></i> ' + labels[3-i] +'<br />';
+
+        }
+
+        return div;
+    };
+
+
+    //end test
 
 
       dc.renderAll();
@@ -105,6 +126,7 @@ dc.dataCount('#count-info')
       var map = anomalychoroplethmap.map();
 
       zoomToGeom(vargeodata);
+      legend.addTo(map);
 
       function zoomToGeom(geodata){
         var bounds = d3.geo.bounds(geodata) ;
